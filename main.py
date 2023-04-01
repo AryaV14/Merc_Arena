@@ -3,7 +3,7 @@ import pygame
 pygame.init()
 
 clock = pygame.time.Clock()
-fps = 60
+fps = 5
 
 #game window
 bottom_panel = 200
@@ -35,11 +35,29 @@ class Fighter():
         self.start_potions = potions
         self.potions = potions
         self.alive = True
-        img = pygame.image.load(f'images/{self.name}/Idle/0.png')
-        self.image = pygame.transform.scale(img, (img.get_width() * 4, img.get_height() * 4))
+        self.animation_list = []
+        self.frame_index = 0
+        self.update_time = pygame.time.get_ticks()
+        for i in range(8):
+            img = pygame.image.load(f'images/{self.name}/Idle/{i}.png')
+            img = pygame.transform.scale(img, (img.get_width() * 4, img.get_height() * 4))
+            self.animation_list.append(img)
+        self.image = self.animation_list[self.frame_index]
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
 
+    def update(self):
+        animation_cooldown = 100
+        self.image = self.animation_list[self.frame_index]
+        if pygame.time.get_ticks() - self.update_time > animation_cooldown:
+            self.updtae_time = pygame.time.get_ticks()
+            self.frame_index += 1
+            
+        if self.frame_index >= len(self.animation_list):
+            self.frame_index = 0
+        
+    
+    
     def draw(self):
         screen.blit(self.image, self.rect)
     
@@ -60,8 +78,10 @@ while run:
     clock.tick(fps)
     draw_img()
     draw_panel()
+    merc.update()
     merc.draw()
     for e in enemy_list:
+        e.update()
         e.draw()
     
     for event in pygame.event.get():
