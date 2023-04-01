@@ -1,1 +1,1 @@
-# MercKombat
+# Merc Arena
