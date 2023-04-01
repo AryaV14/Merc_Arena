@@ -7,9 +7,9 @@ Before playing the game, you will need to have Pygame installed on your computer
 
 To install Pygame, simply run the following command in your terminal:
 
-Copy code
+'''
 pip install pygame
-Controls
+'''
 
 In the game, you will control a character who must defeat their opponent in a one-on-one fighting match. You will need to use a combination of moves and attacks to defeat your opponent.
 
