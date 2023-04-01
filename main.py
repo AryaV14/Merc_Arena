@@ -12,7 +12,7 @@ screen_height = 440 + bottom_panel
 
 
 screen = pygame.display.set_mode((screen_width,screen_height))
-pygame.display.set_caption('mAViMercs')
+pygame.display.set_caption('Merc Arena')
 
 
 #images
@@ -43,9 +43,14 @@ class Fighter():
     def draw(self):
         screen.blit(self.image, self.rect)
     
-merc = Fighter(200, 260, 'merc', 30, 10 ,3)
-enemy1
-enemy2
+merc = Fighter(180, 260, 'merc', 30, 10 ,3)
+enemy1 = Fighter(400, 270, 'enemy', 20, 6, 1)
+enemy2 = Fighter(520, 270, 'enemy', 20, 6, 1)
+
+enemy_list = []
+enemy_list.append(enemy1)
+enemy_list.append(enemy2)
+
 
 run = True
 while run:
@@ -56,6 +61,9 @@ while run:
     draw_img()
     draw_panel()
     merc.draw()
+    for e in enemy_list:
+        e.draw()
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
