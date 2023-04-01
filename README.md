@@ -11,7 +11,7 @@ To install Pygame, simply run the following command in your terminal:
 pip install python 
 ```
 
-In the game, you will control a character who must defeat their opponent in a one-on-one fighting match. You will need to use a combination of moves and attacks to defeat your opponent.
+In the game, you will control a character who must defeat their opponents in a fighting match. You will need to use a combination of moves and attacks to defeat your opponent.
 
 The game is won when one player reduces the other's health bar to zero. 
 
