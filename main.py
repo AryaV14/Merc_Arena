@@ -37,23 +37,50 @@ class Fighter():
         self.alive = True
         self.animation_list = []
         self.frame_index = 0
+        self.action = 0 # 0: idle 1: attack 2: hurt 3: dead
         self.update_time = pygame.time.get_ticks()
+        
+        temp_list = []
         for i in range(8):
             img = pygame.image.load(f'images/{self.name}/Idle/{i}.png')
             img = pygame.transform.scale(img, (img.get_width() * 4, img.get_height() * 4))
-            self.animation_list.append(img)
-        self.image = self.animation_list[self.frame_index]
+            temp_list.append(img)
+        self.animation_list.append(temp_list)
+        
+        temp_list = []
+        for i in range(7):
+            img = pygame.image.load(f'images/{self.name}/Attack/{i}.png')
+            img = pygame.transform.scale(img, (img.get_width() * 4, img.get_height() * 4))
+            temp_list.append(img)
+        self.animation_list.append(temp_list)
+        
+        temp_list = []
+        for i in range(2):
+            img = pygame.image.load(f'images/{self.name}/Hurt/{i}.png')
+            img = pygame.transform.scale(img, (img.get_width() * 4, img.get_height() * 4))
+            temp_list.append(img)
+        self.animation_list.append(temp_list)
+        
+        temp_list = []
+        for i in range(8):
+            img = pygame.image.load(f'images/{self.name}/Death/{i}.png')
+            img = pygame.transform.scale(img, (img.get_width() * 4, img.get_height() * 4))
+            temp_list.append(img)
+        self.animation_list.append(temp_list)
+        
+        
+        self.image = self.animation_list[self.action][self.frame_index]
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
 
     def update(self):
         animation_cooldown = 100
-        self.image = self.animation_list[self.frame_index]
+        self.image = self.animation_list[self.action][self.frame_index]
         if pygame.time.get_ticks() - self.update_time > animation_cooldown:
             self.updtae_time = pygame.time.get_ticks()
             self.frame_index += 1
             
-        if self.frame_index >= len(self.animation_list):
+        if self.frame_index >= len(self.animation_list[self.action]):
             self.frame_index = 0
         
     
