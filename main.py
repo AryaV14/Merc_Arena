@@ -20,6 +20,7 @@ pygame.display.set_caption('Merc Arena')
 background = pygame.image.load('images/background/bg_img_Medium.jpeg').convert_alpha()
 bottom = pygame.image.load('images/bottompanel/panel.jpeg').convert_alpha()
 
+#blit method - for placing the image on to the screen
 def draw_img():
     screen.blit(background, (0,0))
 def draw_panel():
@@ -35,11 +36,12 @@ class Fighter():
         self.start_potions = potions
         self.potions = potions
         self.alive = True
-        self.animation_list = []
+        self.animation_list = [] #each action and its frames
         self.frame_index = 0
         self.action = 0 # 0: idle 1: attack 2: hurt 3: dead
         self.update_time = pygame.time.get_ticks()
         
+        #Idle
         temp_list = []
         for i in range(8):
             img = pygame.image.load(f'images/{self.name}/Idle/{i}.png')
@@ -47,6 +49,7 @@ class Fighter():
             temp_list.append(img)
         self.animation_list.append(temp_list)
         
+        #Attack
         temp_list = []
         for i in range(7):
             img = pygame.image.load(f'images/{self.name}/Attack/{i}.png')
@@ -54,6 +57,7 @@ class Fighter():
             temp_list.append(img)
         self.animation_list.append(temp_list)
         
+        #Hurt
         temp_list = []
         for i in range(2):
             img = pygame.image.load(f'images/{self.name}/Hurt/{i}.png')
@@ -61,6 +65,8 @@ class Fighter():
             temp_list.append(img)
         self.animation_list.append(temp_list)
         
+        
+        #Death
         temp_list = []
         for i in range(8):
             img = pygame.image.load(f'images/{self.name}/Death/{i}.png')
@@ -87,7 +93,9 @@ class Fighter():
     
     def draw(self):
         screen.blit(self.image, self.rect)
-    
+        
+     
+#instances of class fighter
 merc = Fighter(180, 260, 'merc', 30, 10 ,3)
 enemy1 = Fighter(400, 270, 'enemy', 20, 6, 1)
 enemy2 = Fighter(520, 270, 'enemy', 20, 6, 1)
@@ -96,7 +104,7 @@ enemy_list = []
 enemy_list.append(enemy1)
 enemy_list.append(enemy2)
 
-
+#game
 run = True
 while run:
     
