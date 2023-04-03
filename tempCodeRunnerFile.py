@@ -1,1 +1,1 @@
-merc
+pygame.time.get_ticks() - self.update_time
