@@ -19,6 +19,9 @@ current_fighter = 1
 total_fighters = 3
 action_cooldown = 0
 action_wait_time = 90
+attack =False
+potion =False
+clicked =False
 
 font = pygame.font.SysFont('Roboto', 26)
 
@@ -28,6 +31,8 @@ green=(0,255,0)
 #bg image
 background = pygame.image.load('images/background/bg_img_Medium.jpeg').convert_alpha()
 bottom = pygame.image.load('images/bottompanel/panel.jpeg').convert_alpha()
+sword = pygame.image.load('images/icons/sword.png').convert_alpha()
+
 
 
 #function to add text to panel since text cannot be directly written on to the pygame window
@@ -107,14 +112,23 @@ class Fighter():
             self.frame_index += 1
             
         if self.frame_index >= len(self.animation_list[self.action]):
-            self.frame_index = 0
+            self.idle()
      
+    def idle(self):
+        self.action = 0
+        self.frame_index = 0
+        self.update_time = pygame.time.get_ticks()
     
     #update healthbar on each attack
     def attack(self, target):
         rand = random.randint(-5, 5)
         damage = self.strength + rand
         target.hp -= damage
+        if target.hp < 1:
+            target.hp = 0
+            target.alive = False
+                
+       
         self.action = 1
         self.frame_index = 0
         self.update_time = pygame.time.get_ticks()
@@ -175,15 +189,38 @@ while run:
         e.update()
         e.draw()
         
-        
+    
+    attack =False
+    potion =False
+    target = None
+    pygame.mouse.set_visible(True)
+    pos = pygame.mouse.get_pos()
+    for count, enemy in enumerate(enemy_list):
+        if enemy.rect.collidepoint(pos):
+            pygame.mouse.set_visible(False)
+            screen.blit(sword,pos)
+            
     if merc.alive == True:
         if current_fighter == 1:
             action_cooldown += 1
             if action_cooldown >= action_wait_time:
                 merc.attack(enemy1)
                 current_fighter += 1
-                action_cooldown
+                action_cooldown = 0
                 
+    for count, enemy in enumerate(enemy_list):
+        if current_fighter == 2 + count:
+            if enemy.alive == True:
+                action_cooldown += 1
+                if action_cooldown >= action_wait_time:
+                    enemy.attack(merc)
+                    current_fighter += 1
+                    action_cooldown = 0
+            else:
+                current_fighter += 1
+    if current_fighter > total_fighters:
+        current_fighter = 1
+        
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
