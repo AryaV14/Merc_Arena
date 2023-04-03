@@ -30,7 +30,7 @@ background = pygame.image.load('images/background/bg_img_Medium.jpeg').convert_a
 bottom = pygame.image.load('images/bottompanel/panel.jpeg').convert_alpha()
 
 
-
+#function to add text to panel since text cannot be directly written on to the pygame window
 def draw_text(text,font,text_color,x,y):
     img = font.render(text,True,text_color)
     screen.blit(img,(x,y))
@@ -108,7 +108,9 @@ class Fighter():
             
         if self.frame_index >= len(self.animation_list[self.action]):
             self.frame_index = 0
-        
+     
+    
+    #update healthbar on each attack
     def attack(self, target):
         rand = random.randint(-5, 5)
         damage = self.strength + rand
