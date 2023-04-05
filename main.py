@@ -1,5 +1,6 @@
 import pygame
 import random
+import button
 
 pygame.init()
 
@@ -171,6 +172,8 @@ merc_healthbar =HealthBar(100,screen_height-bottom_panel+40,merc.hp,merc.max_hp)
 enemy1_healthbar =HealthBar(400,screen_height-bottom_panel+40,enemy1.hp,enemy1.max_hp)
 enemy2_healthbar =HealthBar(400,screen_height-bottom_panel+100,enemy2.hp,enemy2.max_hp)
 
+
+potion_button = button.Button(screen, 100, screen_height - button +70, potion, 64, 64)
 #game
 run = True
 while run:
@@ -199,14 +202,19 @@ while run:
         if enemy.rect.collidepoint(pos):
             pygame.mouse.set_visible(False)
             screen.blit(sword,pos)
+            if clicked == True:
+                attack = True
+                target = enemy_list[count]
+                
             
     if merc.alive == True:
         if current_fighter == 1:
             action_cooldown += 1
             if action_cooldown >= action_wait_time:
-                merc.attack(enemy1)
-                current_fighter += 1
-                action_cooldown = 0
+                if attack == True and target != None:
+                    merc.attack(target)
+                    current_fighter += 1
+                    action_cooldown = 0
                 
     for count, enemy in enumerate(enemy_list):
         if current_fighter == 2 + count:
@@ -225,6 +233,10 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            clicked = True
+        else: 
+            clicked = False
     pygame.display.update()
             
 pygame.quit()
