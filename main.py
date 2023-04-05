@@ -158,7 +158,7 @@ class HealthBar():
         pygame.draw.rect(screen, red, (self.x,self.y,150,20))
         pygame.draw.rect(screen, green, (self.x,self.y, 150*ratio,20))
         
-        
+ #using sprite- not the normal python class       
 class damage_text(pygame.sprite.Sprite):
       def __init__(self,x,y,damage,color):
           pygame.sprite.Sprite.__init__(self)
