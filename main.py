@@ -130,8 +130,8 @@ class Fighter():
         if target.hp < 1:
             target.hp = 0
             target.alive = False
-                
-       
+        damagetext = damage_text(target.rect.centerx,target.rect.y,str(damage),red)       
+        damage_text_group.add(damagetext)
         self.action = 1
         self.frame_index = 0
         self.update_time = pygame.time.get_ticks()
@@ -158,7 +158,23 @@ class HealthBar():
         pygame.draw.rect(screen, green, (self.x,self.y, 150*ratio,20))
         
         
-        
+class damage_text(pygame.sprite.Sprite):
+      def __init__(self,x,y,damage,color):
+          pygame.sprite.Sprite.__init__(self)
+          self.image = font.render(damage, True, color)
+          self.rect = self.image.get_rect()
+          self.rect.center = (x,y)
+          self.counter=0
+          
+      def update(self):
+          self.rect.y -= 1
+          self.counter += 1
+          if self.counter >30:
+              self.kill()
+          
+          
+           
+damage_text_group = pygame.sprite.Group()           
         
      
 #instances of class fighter
@@ -201,6 +217,8 @@ while run:
         e.update()
         e.draw()
         
+    damage_text_group.update()
+    damage_text_group.draw(screen)
     
     attack =False
     potion =False
@@ -226,14 +244,16 @@ while run:
                     merc.attack(target)
                     current_fighter += 1
                     action_cooldown = 0
-        if potion == True:
+            if potion == True:
                     if merc.potions > 0:
                         if merc.max_hp - merc.hp > potion_effect:
-                            heal_ammount = potion_effect
+                            heal_amount = potion_effect
                         else:
-                            heal_ammount = merc.max_hp - merc.hp
-                        merc.hp += heal_ammount
+                            heal_amount = merc.max_hp - merc.hp
+                        merc.hp += heal_amount
                         merc.potions -= 1
+                        damagetext = damage_text(merc.rect.centerx,merc.rect.y,str(heal_amount),green)       
+                        damage_text_group.add(damagetext)
                         current_fighter += 1
                         action_cooldown = 0
                         
@@ -244,9 +264,21 @@ while run:
             if enemy.alive == True:
                 action_cooldown += 1
                 if action_cooldown >= action_wait_time:
-                    enemy.attack(merc)
-                    current_fighter += 1
-                    action_cooldown = 0
+                    if(enemy.hp/enemy.max_hp)<0.5 and enemy.potions >0:
+                        if enemy.max_hp - enemy.hp > potion_effect:
+                            heal_amount = potion_effect
+                        else:
+                            heal_amount = enemy.max_hp - enemy.hp
+                        enemy.hp += heal_amount
+                        enemy.potions -= 1
+                        damagetext = damage_text(enemy.rect.centerx,enemy.rect.y,str(heal_amount),green)       
+                        damage_text_group.add(damagetext)
+                        current_fighter += 1
+                        action_cooldown = 0
+                    else:
+                        enemy.attack(merc)
+                        current_fighter += 1
+                        action_cooldown = 0
             else:
                 current_fighter += 1
     if current_fighter > total_fighters:
