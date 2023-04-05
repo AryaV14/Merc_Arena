@@ -135,6 +135,7 @@ class Fighter():
             target.hp = 0
             target.alive = False
             target.death()
+            #instance of damage_text class, each damage stored into the group
         damagetext = damage_text(target.rect.centerx,target.rect.y,str(damage),red)       
         damage_text_group.add(damagetext)
         self.action = 1
