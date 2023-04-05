@@ -22,6 +22,7 @@ action_cooldown = 0
 action_wait_time = 90
 attack =False
 potion =False
+potion_effect = 15
 clicked =False
 
 font = pygame.font.SysFont('Roboto', 26)
@@ -32,6 +33,7 @@ green=(0,255,0)
 #bg image
 background = pygame.image.load('images/background/bg_img_Medium.jpeg').convert_alpha()
 bottom = pygame.image.load('images/bottompanel/panel.jpeg').convert_alpha()
+potion = pygame.image.load('images/icons/potion.png').convert_alpha()
 sword = pygame.image.load('images/icons/sword.png').convert_alpha()
 
 
@@ -173,7 +175,7 @@ enemy1_healthbar =HealthBar(400,screen_height-bottom_panel+40,enemy1.hp,enemy1.m
 enemy2_healthbar =HealthBar(400,screen_height-bottom_panel+100,enemy2.hp,enemy2.max_hp)
 
 
-potion_button = button.Button(screen, 100, screen_height - button +70, potion, 64, 64)
+potion_button = button.Button(screen, 100, screen_height-bottom_panel + 70, potion, 64, 64)
 #game
 run = True
 while run:
@@ -205,7 +207,9 @@ while run:
             if clicked == True:
                 attack = True
                 target = enemy_list[count]
-                
+    if potion_button.draw():
+        potion = True 
+    draw_text(str(merc.potions),font, red,160,screen_height - bottom_panel +90)      
             
     if merc.alive == True:
         if current_fighter == 1:
@@ -215,6 +219,18 @@ while run:
                     merc.attack(target)
                     current_fighter += 1
                     action_cooldown = 0
+        if potion == True:
+                    if merc.potions > 0:
+                        if merc.max_hp - merc.hp > potion_effect:
+                            heal_ammount = potion_effect
+                        else:
+                            heal_ammount = merc.max_hp - merc.hp
+                        merc.hp += heal_ammount
+                        merc.potions -= 1
+                        current_fighter += 1
+                        action_cooldown = 0
+                        
+                        
                 
     for count, enemy in enumerate(enemy_list):
         if current_fighter == 2 + count:
