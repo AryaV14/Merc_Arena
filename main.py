@@ -16,9 +16,9 @@ screen_height = 440 + bottom_panel
 screen = pygame.display.set_mode((screen_width,screen_height))
 pygame.display.set_caption('Merc Arena')
 
-current_fighter = 1
+current_fighter = 1  #1=merc 2=enemy1 3=enemy2
 total_fighters = 3
-action_cooldown = 0
+action_cooldown = 0  
 action_wait_time = 90
 attack =False
 potion =False
