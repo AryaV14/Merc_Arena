@@ -24,9 +24,11 @@ attack =False
 potion =False
 potion_effect = 15
 clicked =False
+game_over = 0
 
 font = pygame.font.SysFont('Roboto', 26)
 
+black=(0,0,0)
 red=(255,0,0)
 green=(0,255,0)
 #images
@@ -34,6 +36,9 @@ green=(0,255,0)
 background = pygame.image.load('images/background/bg_img_Medium.jpeg').convert_alpha()
 bottom = pygame.image.load('images/bottompanel/panel.jpeg').convert_alpha()
 potion = pygame.image.load('images/icons/potion.png').convert_alpha()
+victory = pygame.image.load('images/icons/victory.png').convert_alpha()
+defeat = pygame.image.load('images/icons/defeat.png').convert_alpha()
+restart = pygame.image.load('images/icons/restart.png').convert_alpha()
 sword = pygame.image.load('images/icons/sword.png').convert_alpha()
 
 
@@ -49,9 +54,9 @@ def draw_img():
     screen.blit(background, (0,0))
 def draw_panel():
     screen.blit(bottom, (0,screen_height - bottom_panel))
-    draw_text(f'{merc.name} HP: {merc.hp}',font, red,100,screen_height-bottom_panel +10)
+    draw_text(f'{merc.name} HP: {merc.hp}',font, black ,100,screen_height-bottom_panel +10)
     for count, i in enumerate(enemy_list):
-        draw_text(f'{i.name} HP: {i.hp}',font, red,400,(screen_height-bottom_panel +10)+count*60)
+        draw_text(f'{i.name} HP: {i.hp}',font, black ,400,(screen_height-bottom_panel +10)+count*60)
         
     
     
@@ -152,6 +157,15 @@ class Fighter():
         self.action = 3
         self.frame_index = 0
         self.update_time = pygame.time.get_ticks()
+    
+    def reset(self):
+        self.alive = True
+        self.potions = self.start_potions
+        self.hp = self.max_hp
+        self.frame_index = 0
+        self.action = 0
+        self.update_time = pygame.time.get_ticks()
+
         
     def draw(self):
         screen.blit(self.image, self.rect)
@@ -210,6 +224,7 @@ enemy2_healthbar =HealthBar(400,screen_height-bottom_panel+100,enemy2.hp,enemy2.
 
 #Button class in button.py
 potion_button = button.Button(screen, 100, screen_height-bottom_panel + 70, potion, 64, 64)
+restart_button = button.Button(screen, 260, 120, restart, 120, 50)
 
 
 #game
@@ -252,55 +267,79 @@ while run:
     if potion_button.draw():
         potion = True 
     draw_text(str(merc.potions),font, red,160,screen_height - bottom_panel +90)      
-            
-    if merc.alive == True:
-        if current_fighter == 1:
-            action_cooldown += 1
-            if action_cooldown >= action_wait_time:
-                if attack == True and target != None:
-                    merc.attack(target)
-                    current_fighter += 1
-                    action_cooldown = 0
-            if potion == True:
-                    if merc.potions > 0:
-                        if merc.max_hp - merc.hp > potion_effect:
-                            heal_amount = potion_effect
-                        else:
-                            heal_amount = merc.max_hp - merc.hp
-                        merc.hp += heal_amount
-                        merc.potions -= 1
-                        damagetext = damage_text(merc.rect.centerx,merc.rect.y,str(heal_amount),green)       
-                        damage_text_group.add(damagetext)
-                        current_fighter += 1
-                        action_cooldown = 0
-                        
-                        
-                
-    for count, enemy in enumerate(enemy_list):
-        if current_fighter == 2 + count:
-            if enemy.alive == True:
+    
+    if game_over ==0:     
+        if merc.alive == True:
+            if current_fighter == 1:
                 action_cooldown += 1
                 if action_cooldown >= action_wait_time:
-                    if(enemy.hp/enemy.max_hp)<0.5 and enemy.potions >0:
-                        if enemy.max_hp - enemy.hp > potion_effect:
-                            heal_amount = potion_effect
+                    if attack == True and target != None:
+                        merc.attack(target)
+                        current_fighter += 1
+                        action_cooldown = 0
+                if potion == True:
+                        if merc.potions > 0:
+                            if merc.max_hp - merc.hp > potion_effect:
+                                heal_amount = potion_effect
+                            else:
+                                heal_amount = merc.max_hp - merc.hp
+                            merc.hp += heal_amount
+                            merc.potions -= 1
+                            damagetext = damage_text(merc.rect.centerx,merc.rect.y,str(heal_amount),green)       
+                            damage_text_group.add(damagetext)
+                            current_fighter += 1
+                            action_cooldown = 0
+        else:
+            game_over = -1                 
+                            
+                    
+        for count, enemy in enumerate(enemy_list):
+            if current_fighter == 2 + count:
+                if enemy.alive == True:
+                    action_cooldown += 1
+                    if action_cooldown >= action_wait_time:
+                        if(enemy.hp/enemy.max_hp)<0.5 and enemy.potions >0:
+                            if enemy.max_hp - enemy.hp > potion_effect:
+                                heal_amount = potion_effect
+                            else:
+                                heal_amount = enemy.max_hp - enemy.hp
+                            enemy.hp += heal_amount
+                            enemy.potions -= 1
+                            damagetext = damage_text(enemy.rect.centerx,enemy.rect.y,str(heal_amount),green)       
+                            damage_text_group.add(damagetext)
+                            current_fighter += 1
+                            action_cooldown = 0
                         else:
-                            heal_amount = enemy.max_hp - enemy.hp
-                        enemy.hp += heal_amount
-                        enemy.potions -= 1
-                        damagetext = damage_text(enemy.rect.centerx,enemy.rect.y,str(heal_amount),green)       
-                        damage_text_group.add(damagetext)
-                        current_fighter += 1
-                        action_cooldown = 0
-                    else:
-                        enemy.attack(merc)
-                        current_fighter += 1
-                        action_cooldown = 0
-            else:
-                current_fighter += 1
-    if current_fighter > total_fighters:
-        current_fighter = 1
+                            enemy.attack(merc)
+                            current_fighter += 1
+                            action_cooldown = 0
+                else:
+                    current_fighter += 1
+        if current_fighter > total_fighters:
+            current_fighter = 1
+    
+    alive_enemy = 0
+    for enemy in enemy_list:
+        if enemy.alive == True:
+            alive_enemy += 1
+            
+    if alive_enemy ==0:
+        game_over = 1
         
+    if game_over!=0:
+        if game_over ==1:
+            screen.blit(victory,(1,1))
+        if game_over ==-1:
+            screen.blit(defeat,(1,1))
+        if restart_button.draw():
+            merc.reset()
+            for enemy in enemy_list:
+                enemy.reset()
+            current_fighter =1
+            action_cooldown 
+            game_over = 0
+            
+            
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
