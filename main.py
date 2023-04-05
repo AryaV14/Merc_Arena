@@ -175,8 +175,10 @@ merc_healthbar =HealthBar(100,screen_height-bottom_panel+40,merc.hp,merc.max_hp)
 enemy1_healthbar =HealthBar(400,screen_height-bottom_panel+40,enemy1.hp,enemy1.max_hp)
 enemy2_healthbar =HealthBar(400,screen_height-bottom_panel+100,enemy2.hp,enemy2.max_hp)
 
-
+#Button class in button.py
 potion_button = button.Button(screen, 100, screen_height-bottom_panel + 70, potion, 64, 64)
+
+
 #game
 run = True
 while run:
@@ -186,9 +188,13 @@ while run:
     clock.tick(fps)
     draw_img()
     draw_panel()
+    
     merc_healthbar.draw(merc.hp)
     enemy1_healthbar.draw(enemy1.hp)
     enemy2_healthbar.draw(enemy2.hp)
+    
+    
+    # drawing characters
     merc.update()
     merc.draw()
     for e in enemy_list:
