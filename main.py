@@ -115,7 +115,10 @@ class Fighter():
             self.frame_index += 1
             
         if self.frame_index >= len(self.animation_list[self.action]):
-            self.idle()
+            if self.action ==3:
+                self.frame_index = len(self.animation_list[self.action]) - 1
+            else: 
+                self.idle()
      
     def idle(self):
         self.action = 0
@@ -127,16 +130,28 @@ class Fighter():
         rand = random.randint(-5, 5)
         damage = self.strength + rand
         target.hp -= damage
+        target.hurt()
         if target.hp < 1:
             target.hp = 0
             target.alive = False
+            target.death()
         damagetext = damage_text(target.rect.centerx,target.rect.y,str(damage),red)       
         damage_text_group.add(damagetext)
         self.action = 1
         self.frame_index = 0
         self.update_time = pygame.time.get_ticks()
-        
     
+    
+    def hurt(self):
+        self.action = 2
+        self.frame_index = 0
+        self.update_time = pygame.time.get_ticks()    
+    
+    def death(self):
+        self.action = 3
+        self.frame_index = 0
+        self.update_time = pygame.time.get_ticks()
+        
     def draw(self):
         screen.blit(self.image, self.rect)
         
@@ -229,7 +244,7 @@ while run:
         if enemy.rect.collidepoint(pos):
             pygame.mouse.set_visible(False)
             screen.blit(sword,pos)
-            if clicked == True:
+            if clicked == True and enemy.alive == True:
                 attack = True
                 target = enemy_list[count]
     if potion_button.draw():
