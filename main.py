@@ -170,6 +170,7 @@ enemy_list = []
 enemy_list.append(enemy1)
 enemy_list.append(enemy2)
 
+#instances of class HealthBar
 merc_healthbar =HealthBar(100,screen_height-bottom_panel+40,merc.hp,merc.max_hp)
 enemy1_healthbar =HealthBar(400,screen_height-bottom_panel+40,enemy1.hp,enemy1.max_hp)
 enemy2_healthbar =HealthBar(400,screen_height-bottom_panel+100,enemy2.hp,enemy2.max_hp)
