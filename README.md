@@ -17,3 +17,7 @@ The game is won when one player reduces the other's health bar to zero.
 
 
 <img width="639" alt="Screenshot 2023-04-01 at 11 53 22 PM" src="https://user-images.githubusercontent.com/99739280/229308047-e7cb7695-3966-4db7-b2a4-786fe2b908b0.png">
+
+
+https://user-images.githubusercontent.com/99739280/230303103-2c8aade4-e3fb-49aa-9840-64dcd44eda3c.mp4
+
