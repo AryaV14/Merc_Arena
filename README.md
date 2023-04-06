@@ -20,8 +20,11 @@ Bottle of potion can be used to restore health. Enemies use their potion once, w
 Once the game begins, the merc can give his first strike by choosing the enemy to attack. If you hover the mouse over the enemy the cursor changes to a sword. Click on the enemy to attack.
 
 ## Libraries used
+
 Latest versions of :
+
 Pygame
+
 Random
 
 
@@ -46,7 +49,7 @@ Clone this repository
 
 https://github.com/AryaV14/Merc_Arena.git
 
-Run the main.py file
+Run the main.py file.
 
 
 
