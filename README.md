@@ -19,19 +19,30 @@ Bottle of potion can be used to restore health. Enemies use their potion once, w
 
 Once the game begins, the merc can give his first strike by choosing the enemy to attack. If you hover the mouse over the enemy the cursor changes to a sword. Click on the enemy to attack.
 
+## Libraries used
+Latest versions of :
+Pygame
+Random
 
-## Installation
+
+## How to configure
 Before playing the game, you will need to have Pygame installed on your computer. Pygame can be installed via pip, a package manager for Python.
 
 To install Pygame, simply run the following command in your terminal:
 
 ```
-pip install python 
+pip install pygame
 ```
 
+To install Random, run the command :
 
+```
+pip install random2
+```
 
+## How to Run
 
+Clone this repository
 
 
 
