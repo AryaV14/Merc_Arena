@@ -15,8 +15,9 @@ https://user-images.githubusercontent.com/99739280/230305864-df6da967-6a11-4bc8-
 In the game, you will control the merc who must defeat his opponents in a sword fight. You will need to use a combination of moves and attacks to defeat your opponent.
 
 The game is won when one player reduces the other's health bar to zero. 
+Bottle of potion can be used to restore health. Enemies use their potion once, when their health goes below 50%. No characters can use the health potion if they are dead.
 
-Bottle of potion can be used to restore health.
+Once the game begins, the merc can give his first strike by choosing the enemy to attack. If you hover the mouse over the enemy the cursor changes to a sword. Click on the enemy to attack.
 
 
 ## Installation
