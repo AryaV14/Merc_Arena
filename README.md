@@ -44,6 +44,9 @@ pip install random2
 
 Clone this repository
 
+https://github.com/AryaV14/Merc_Arena.git
+
+Run the main.py file
 
 
 
