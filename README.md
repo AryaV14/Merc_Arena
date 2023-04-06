@@ -1,3 +1,4 @@
+![229285417-80d68655-4282-4a33-87a2-20723c8dfcb0](https://user-images.githubusercontent.com/99739280/230303940-75883e73-016c-45e0-9479-010409016092.png)
 # Merc Arena
 
 Welcome to the README file for Merc Arena developed with Pygame! This file will provide you with all the information you need to know to get started playing the game.
@@ -16,7 +17,6 @@ In the game, you will control a character who must defeat their opponents in a f
 The game is won when one player reduces the other's health bar to zero. 
 
 
-<img width="639" alt="Screenshot 2023-04-01 at 11 53 22 PM" src="https://user-images.githubusercontent.com/99739280/229308047-e7cb7695-3966-4db7-b2a4-786fe2b908b0.png">
 
 
 https://user-images.githubusercontent.com/99739280/230303103-2c8aade4-e3fb-49aa-9840-64dcd44eda3c.mp4
