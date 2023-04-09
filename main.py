@@ -231,12 +231,12 @@ restart_button = button.Button(screen, 260, 120, restart, 120, 50)
 run = True
 while run:
     
-    
-    
     clock.tick(fps)
+    #to draw background image and bottom panel
     draw_img()
     draw_panel()
     
+    #to draw the healthbars
     merc_healthbar.draw(merc.hp)
     enemy1_healthbar.draw(enemy1.hp)
     enemy2_healthbar.draw(enemy2.hp)
@@ -249,6 +249,7 @@ while run:
         e.update()
         e.draw()
         
+    # vanishing damage and potion effect text
     damage_text_group.update()
     damage_text_group.draw(screen)
     
