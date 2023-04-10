@@ -261,7 +261,7 @@ while run:
     for count, enemy in enumerate(enemy_list):
         if enemy.rect.collidepoint(pos):
             pygame.mouse.set_visible(False)
-            screen.blit(sword,pos)
+            screen.blit(sword,pos)   #sword icon
             if clicked == True and enemy.alive == True:
                 attack = True
                 target = enemy_list[count]
